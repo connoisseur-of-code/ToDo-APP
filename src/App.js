@@ -9,12 +9,19 @@ function App() {
 			setTasks([...tasks, newTask]);
 			setNewTask('');
 		}
+
+		// TODO: stworzyć powiadomnienie używajac react-toastify
+		alert(`Correctly Created Task named: ${newTask}`);
 	};
 
 	const removeTask = (index) => {
 		const newTasks = [...tasks];
+		const removedTask = tasks[index];
 		newTasks.splice(index, 1);
 		setTasks(newTasks);
+
+		// TODO: stworzyć powiadomnienie używajac react-toastify
+		alert(`Correctly Removed Task named: ${removedTask}`);
 	};
 
 	return (
