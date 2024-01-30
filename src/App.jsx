@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Notification from './components/Notification';
 
 function App() {
 	const [tasks, setTasks] = useState([]);
 	const [newTask, setNewTask] = useState('');
 	const [notification, setNotification] = useState(null);
+
+	useEffect(() => {
+		const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+		setTasks(storedTasks);
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem('tasks', JSON.stringify(tasks));
+	}, [tasks]);
 
 	const addTask = () => {
 		if (newTask.trim() !== '') {

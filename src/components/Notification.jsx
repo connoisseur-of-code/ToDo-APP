@@ -26,7 +26,7 @@ const Notification = ({ message, onClose }) => {
 				borderRadius: '0.25rem',
 				opacity: visible ? 1 : 0,
 				transform: `translateY(${visible ? '0' : '1rem'})`,
-				transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out',
+				transition: 'opacity 4.7s ease-in-out, transform 4.7s ease-in-out',
 			}}
 		>
 			{message}
