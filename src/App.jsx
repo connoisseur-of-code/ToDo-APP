@@ -6,6 +6,7 @@ function App() {
 	const [newTask, setNewTask] = useState('');
 	const [notification, setNotification] = useState(null);
 
+	// Local Storage
 	useEffect(() => {
 		const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
 		setTasks(storedTasks);
@@ -15,22 +16,42 @@ function App() {
 		localStorage.setItem('tasks', JSON.stringify(tasks));
 	}, [tasks]);
 
+	// Notification
+	const showNotification = (message) => {
+		setNotification(message);
+
+		// Clear notification after 3 seconds
+		setTimeout(() => {
+			setNotification(null);
+		}, 3000); // 1 Second = 1000
+	};
+
+	// Add & Remove tasks
 	const addTask = () => {
-		if (newTask.trim() !== '') {
-			setTasks([...tasks, newTask]);
-			setNewTask('');
+		if (newTask.trim() === '') {
+			showNotification('Please enter a task name before adding!');
+			return;
 		}
 
-		setNotification(`Task "${newTask}" has been added!`);
+		setTasks([...tasks, { text: newTask, completed: false }]);
+		setNewTask('');
+		showNotification(`Task "${newTask}" has been added!`);
 	};
 
 	const removeTask = (index) => {
-		const newTasks = [...tasks];
 		const removedTask = tasks[index];
+		const newTasks = [...tasks];
 		newTasks.splice(index, 1);
 		setTasks(newTasks);
 
-		setNotification(`Task "${removedTask}" has been removed!`);
+		showNotification(`Task "${removedTask.text}" has been removed!`);
+	};
+
+	// Toggling completeion status idk how to name it xD
+	const toggleCompletion = (index) => {
+		const newTasks = [...tasks];
+		newTasks[index].completed = !newTasks[index].completed;
+		setTasks(newTasks);
 	};
 
 	return (
@@ -54,8 +75,18 @@ function App() {
 			<ul>
 				{tasks.map((task, index) => (
 					<li key={index} className="flex items-center mb-2">
-						<span className="mr-2">{task}</span>
-						<button className="text-red-500" onClick={() => removeTask(index)}>
+						<input
+							type="checkbox"
+							checked={task.completed}
+							onChange={() => toggleCompletion(index)}
+						/>
+						<span className={`ml-2 ${task.completed ? 'line-through' : ''}`}>
+							{task.text}
+						</span>
+						<button
+							className="text-red-500 ml-2"
+							onClick={() => removeTask(index)}
+						>
 							Remove
 						</button>
 					</li>

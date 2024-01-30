@@ -14,20 +14,9 @@ const Notification = ({ message, onClose }) => {
 
 	return (
 		<div
-			style={{
-				position: 'fixed',
-				bottom: '0',
-				right: '0',
-				marginBottom: '4px',
-				marginRight: '4px',
-				padding: '1rem',
-				backgroundColor: '#48bb78',
-				color: '#fff',
-				borderRadius: '0.25rem',
-				opacity: visible ? 1 : 0,
-				transform: `translateY(${visible ? '0' : '1rem'})`,
-				transition: 'opacity 4.7s ease-in-out, transform 4.7s ease-in-out',
-			}}
+			className={`mt-4 fixed top-0 left-1/2 transform -translate-x-1/2 bg-green-500 text-white p-4 rounded-md shadow-md transition-opacity duration-500 ${
+				visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
+			}`}
 		>
 			{message}
 		</div>
