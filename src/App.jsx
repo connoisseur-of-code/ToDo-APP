@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import Notification from './components/Notification';
 
 function App() {
 	const [tasks, setTasks] = useState([]);
 	const [newTask, setNewTask] = useState('');
+	const [notification, setNotification] = useState(null);
 
 	const addTask = () => {
 		if (newTask.trim() !== '') {
@@ -10,8 +12,7 @@ function App() {
 			setNewTask('');
 		}
 
-		// TODO: stworzyć powiadomnienie używajac react-toastify
-		alert(`Correctly Created Task named: ${newTask}`);
+		setNotification(`Task "${newTask}" has been added!`);
 	};
 
 	const removeTask = (index) => {
@@ -20,8 +21,7 @@ function App() {
 		newTasks.splice(index, 1);
 		setTasks(newTasks);
 
-		// TODO: stworzyć powiadomnienie używajac react-toastify
-		alert(`Correctly Removed Task named: ${removedTask}`);
+		setNotification(`Task "${removedTask}" has been removed!`);
 	};
 
 	return (
@@ -52,6 +52,12 @@ function App() {
 					</li>
 				))}
 			</ul>
+			{notification && (
+				<Notification
+					message={notification}
+					onClose={() => setNotification(null)}
+				/>
+			)}
 		</div>
 	);
 }
